@@ -9,6 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -175,6 +178,11 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         getContentPane().add(jButtonAddFiles, gridBagConstraints);
 
         jButtonDeleteFiles.setText("Delete selected files");
+        jButtonDeleteFiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteFilesActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 4;
@@ -462,6 +470,22 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         }
         activitySpace = new JVectorSpace[fileCount];
     }//GEN-LAST:event_jButtonAddFilesActionPerformed
+
+    private void jButtonDeleteFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteFilesActionPerformed
+        // TODO add your handling code here:
+        int[] selRows = this.jTableDataFiles.getSelectedRows();
+        int nSelections = selRows.length;
+        if(nSelections <= 0)
+            return;
+        ArrayList<Integer> selList = new ArrayList();
+        for(int idx : selRows)
+                selList.add(idx);
+        selList.sort(null);
+        for(int count = nSelections - 1 ; count >= 0 ; count --){
+            model.removeRow((int) selList.get(count));
+        }
+        this.jTableDataFiles.setModel(model);
+    }//GEN-LAST:event_jButtonDeleteFilesActionPerformed
         
     /**
      * @param args the command line arguments

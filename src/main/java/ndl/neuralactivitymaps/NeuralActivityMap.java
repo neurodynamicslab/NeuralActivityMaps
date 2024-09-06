@@ -92,8 +92,6 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         jFormattedTextFieldyRes = new javax.swing.JFormattedTextField();
         jLabelxRes = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jFormattedTextFieldnCmpts = new javax.swing.JFormattedTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jFormattedTextFieldBW = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -153,6 +151,8 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         });
         jTableDataFiles.setColumnSelectionAllowed(true);
         jTableDataFiles.setPreferredSize(new java.awt.Dimension(450, 400));
+        jTableDataFiles.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableDataFiles.setShowGrid(true);
         jScrollPane1.setViewportView(jTableDataFiles);
         jTableDataFiles.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -238,23 +238,6 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         gridBagConstraints.gridy = 18;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(jLabel2, gridBagConstraints);
-
-        jLabel1.setText("No of components");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 22;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(jLabel1, gridBagConstraints);
-
-        jFormattedTextFieldnCmpts.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextFieldnCmpts.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jFormattedTextFieldnCmpts.setText("2");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 22;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jFormattedTextFieldnCmpts, gridBagConstraints);
 
         jCheckBox1.setText("Spatial Binning");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -407,7 +390,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
             try {
                 activitySpace[count]= new JVectorSpace(this.getxRes(),this.getyRes());
                 readStatus = readNeuralActivitySpace(fName,activitySpace[count]);
-//                model.setValueAt(activitySpace[count].getnComp(), count,5);
+                model.setValueAt(activitySpace[count].getnComp(), count,5);
             } catch (IOException ex) {
                 Logger.getLogger(NeuralActivityMap.class.getName()).log(Level.SEVERE, null, ex);
             }catch(Exception ex){
@@ -539,10 +522,8 @@ public class NeuralActivityMap extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBoxFSeparator;
     private javax.swing.JFormattedTextField jFormattedTextFieldBW;
-    private javax.swing.JFormattedTextField jFormattedTextFieldnCmpts;
     private javax.swing.JFormattedTextField jFormattedTextFieldxRes;
     private javax.swing.JFormattedTextField jFormattedTextFieldyRes;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -577,10 +558,10 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                ArrayList<JVector> activityVector = new ArrayList();
                
                String dataLine, dataFrag [];
-               Double [] cmpts ;
+               Double [] cmpts ; //= new Double[0];
                int xData, yData, sNo = 0;
                OrdXYData xyCord;
-               JVector activity;
+               JVector activity; //= new JVector(cmpts);
                
                    while ((dataLine = dataReader.readLine()) != null){
                        dataFrag = dataLine.split("\t"); //replace by separator
@@ -597,11 +578,12 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                             cmpts[nFrag - 2] = Double.valueOf(dataFrag[nFrag]);
                        }   
                        activity = new JVector(cmpts);
+                       
                        xyVector.add(xyCord);
                        activityVector.add(activity);
                    }
                    jVectorSpace.fillSpace(xyVector, activityVector, false);
-                   
+                  // this.jFormattedTextFieldnCmpts.setText(activity.getNComponents()+"");
            }
            
            

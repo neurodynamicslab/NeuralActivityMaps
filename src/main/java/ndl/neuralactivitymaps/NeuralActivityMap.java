@@ -24,6 +24,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
 
     private float ScaleX = 1;
     private float ScaleY = 1;
+    private String fileSep;
 
     /**
      * @return the xRes
@@ -379,6 +380,53 @@ public class NeuralActivityMap extends javax.swing.JFrame {
        // File workingDirectory;
         if(fileList == null || fileList.length == 0)
             return;
+        
+        int sepChoice = this.jComboBoxFSeparator.getSelectedIndex();
+        
+       /**The choices of file separators
+        *Space (" ")
+         Tab (\t)
+         Newline(\n)
+         Newline(\r)
+         Comma(",")
+         Semicolon(";")
+         Colon(":")
+         Others(Overwrite this text)
+        *  
+        */
+         
+        switch (sepChoice){
+            case 0:
+                this.fileSep = " ";
+                break;
+            case 1:
+                this.fileSep = "\t";
+                break;
+            case 2:
+                this.fileSep = "\n";
+                break;
+            case 3:
+                this.fileSep = "\r";
+                break;
+            case 4:
+                this.fileSep = ",";
+                break;
+            case 5: 
+                this.fileSep = ";";
+                break;
+            case 6:
+                this.fileSep = ":";
+                break;
+            default :
+                String sepTxt = (String) this.jComboBoxFSeparator.getSelectedItem();
+                int idx = sepTxt.indexOf("\\");
+                if(idx >= 0)
+                    this.fileSep = "\\" + sepTxt.charAt(idx+1);
+                else
+                    this.fileSep = sepTxt;
+                break;      
+        }
+        
         if(model == null)   
             model = (DefaultTableModel)this.jTableDataFiles.getModel();
         boolean readStatus = false;
@@ -564,7 +612,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                JVector activity; //= new JVector(cmpts);
                
                    while ((dataLine = dataReader.readLine()) != null){
-                       dataFrag = dataLine.split("\t"); //replace by separator
+                       dataFrag = dataLine.split(this.fileSep); 
                        var tFrag = dataFrag.length;
                        cmpts = new Double[tFrag-2];
                        

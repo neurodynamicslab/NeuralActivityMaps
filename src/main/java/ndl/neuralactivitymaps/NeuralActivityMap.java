@@ -9,9 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -22,10 +19,26 @@ import ndl.ndllib.*;
  */
 public class NeuralActivityMap extends javax.swing.JFrame {
 
-    private float ScaleX = 1;
-    private float ScaleY = 1;
-    private String fileSep;
+    /**
+     * @param nRepeat the nRepeat to set
+     */
+    public void setnRepeat(int nRepeat) {
+        this.nRepeat = nRepeat;
+    }
 
+    /**
+     * @param repeatSpace the repeatSpace to set
+     */
+    public void setRepeatSpace(boolean repeatSpace) {
+        this.repeatSpace = repeatSpace;
+    }
+
+    private float ScaleX = 1;       // use this to scale the resolution and hence the size of images
+    private float ScaleY = 1;       //
+    private String fileSep;
+    private int nRepeat;
+    private boolean repeatSpace = true;
+            
     /**
      * @return the xRes
      */
@@ -93,8 +106,8 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         jFormattedTextFieldyRes = new javax.swing.JFormattedTextField();
         jLabelxRes = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jFormattedTextFieldBW = new javax.swing.JFormattedTextField();
+        jCheckBoxEqSamples = new javax.swing.JCheckBox();
+        jFormattedTextFieldRepeat = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -240,25 +253,26 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(jLabel2, gridBagConstraints);
 
-        jCheckBox1.setText("Spatial Binning");
+        jCheckBoxEqSamples.setSelected(true);
+        jCheckBoxEqSamples.setText(" Equate Samples");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 30;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(jCheckBox1, gridBagConstraints);
+        getContentPane().add(jCheckBoxEqSamples, gridBagConstraints);
 
-        jFormattedTextFieldBW.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextFieldBW.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jFormattedTextFieldBW.setText("0");
+        jFormattedTextFieldRepeat.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextFieldRepeat.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jFormattedTextFieldRepeat.setText("0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 32;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jFormattedTextFieldBW, gridBagConstraints);
+        getContentPane().add(jFormattedTextFieldRepeat, gridBagConstraints);
 
-        jLabel3.setText("Bin width");
+        jLabel3.setText("Repeat activity for");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 32;
@@ -298,7 +312,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(jComboBoxFSeparator, gridBagConstraints);
 
-        jLabel6.setText("jLabel6");
+        jLabel6.setText("Progress");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 34;
@@ -382,6 +396,9 @@ public class NeuralActivityMap extends javax.swing.JFrame {
             return;
         
         int sepChoice = this.jComboBoxFSeparator.getSelectedIndex();
+        this.setRepeatSpace(this.jCheckBoxEqSamples.isSelected());
+        this.setnRepeat(Integer.parseInt(this.jFormattedTextFieldRepeat.getText()));
+        
         
        /**The choices of file separators
         *Space (" ")
@@ -478,14 +495,12 @@ public class NeuralActivityMap extends javax.swing.JFrame {
         if (fileList.length > 0 ) {
             File selDirectory = new File(fileList[0]).getParentFile();
             workingDirectory = selDirectory.exists() ? selDirectory : workingDirectory;
-            int currRows = model.getRowCount();
             //if (currRows == 0 )
              //       model.setColumnCount(3);
             //model.setRowCount(0);
             model.setRowCount(fileList.length );
             //model.
             int count = 0;
-            boolean status;
             for(String fname : fileList){
 
                 model.setValueAt(count+1, count, 0);
@@ -566,10 +581,10 @@ public class NeuralActivityMap extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAddFiles;
     private javax.swing.JButton jButtonDeleteFiles;
     private javax.swing.JButton jButtonProcess;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBoxEqSamples;
     private javax.swing.JComboBox<String> jComboBoxFSeparator;
-    private javax.swing.JFormattedTextField jFormattedTextFieldBW;
+    private javax.swing.JFormattedTextField jFormattedTextFieldRepeat;
     private javax.swing.JFormattedTextField jFormattedTextFieldxRes;
     private javax.swing.JFormattedTextField jFormattedTextFieldyRes;
     private javax.swing.JLabel jLabel2;
@@ -630,7 +645,23 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                        xyVector.add(xyCord);
                        activityVector.add(activity);
                    }
-                   jVectorSpace.fillSpace(xyVector, activityVector, false);
+                   if(this.isRepeatSpace()){
+                       double spaceRatio = xyVector.size()/activityVector.size();
+                       
+                       if(spaceRatio < 1){
+                           int nRepeats = activityVector.size()/xyVector.size();
+                           for(var xyTmp : xyVector){
+                               
+                           }
+                           
+                       }else{
+                           
+                       }
+                       
+                   }else
+                        
+                       jVectorSpace.fillSpace(xyVector, activityVector, false);
+                   
                   // this.jFormattedTextFieldnCmpts.setText(activity.getNComponents()+"");
            }
            
@@ -639,6 +670,20 @@ public class NeuralActivityMap extends javax.swing.JFrame {
        
         
         return status;
+    }
+
+    /**
+     * @return the nRepeat
+     */
+    public int getnRepeat() {
+        return nRepeat;
+    }
+
+    /**
+     * @return the repeatSpace
+     */
+    public boolean isRepeatSpace() {
+        return repeatSpace;
     }
 
 }

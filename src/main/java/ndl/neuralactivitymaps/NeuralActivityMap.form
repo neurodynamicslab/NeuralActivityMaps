@@ -291,9 +291,10 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="jCheckBoxEqSamples">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Spatial Binning"/>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value=" Equate Samples"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -301,7 +302,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldBW">
+    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldRepeat">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
           <Format format="#0" subtype="-1" type="0"/>
@@ -317,7 +318,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Bin width"/>
+        <Property name="text" type="java.lang.String" value="Repeat activity for"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -387,7 +388,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel6"/>
+        <Property name="text" type="java.lang.String" value="Progress"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -1176,11 +1177,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="58_jCheckBox1">
-          <CodeVariable name="jCheckBox1" type="8194" declaredType="javax.swing.JCheckBox"/>
+        <CodeExpression id="58_jCheckBoxEqSamples">
+          <CodeVariable name="jCheckBoxEqSamples" type="8194" declaredType="javax.swing.JCheckBox"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jCheckBox1"/>
+              <ComponentRef name="jCheckBoxEqSamples"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>
@@ -1258,11 +1259,11 @@
         <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
       </StatementProvider>
       <Parameters>
-        <CodeExpression id="64_jFormattedTextFieldBW">
-          <CodeVariable name="jFormattedTextFieldBW" type="8194" declaredType="javax.swing.JFormattedTextField"/>
+        <CodeExpression id="64_jFormattedTextFieldRepeat">
+          <CodeVariable name="jFormattedTextFieldRepeat" type="8194" declaredType="javax.swing.JFormattedTextField"/>
           <ExpressionOrigin>
             <ExpressionProvider type="ComponentRef">
-              <ComponentRef name="jFormattedTextFieldBW"/>
+              <ComponentRef name="jFormattedTextFieldRepeat"/>
             </ExpressionProvider>
           </ExpressionOrigin>
         </CodeExpression>

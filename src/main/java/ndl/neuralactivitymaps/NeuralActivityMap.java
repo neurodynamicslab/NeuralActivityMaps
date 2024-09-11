@@ -645,17 +645,26 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                        xyVector.add(xyCord);
                        activityVector.add(activity);
                    }
-                   if(this.isRepeatSpace()){
-                       double spaceRatio = xyVector.size()/activityVector.size();
+                   double spaceRatio = xyVector.size()/activityVector.size();
+                   if(this.isRepeatSpace() && spaceRatio != 1){
+                       
                        
                        if(spaceRatio < 1){
-                           int nRepeats = activityVector.size()/xyVector.size();
+                           int nRepeats = (activityVector.size()/xyVector.size()) + 1;
+                           ArrayList <OrdXYData> expXYArray = new ArrayList();
                            for(var xyTmp : xyVector){
-                               
+                               for(var Count = 0; Count < nRepeats ; Count++)
+                                   expXYArray.add(xyTmp);
                            }
-                           
+                           jVectorSpace.fillSpace(expXYArray, activityVector, status);
                        }else{
-                           
+                           int nRepeats = (xyVector.size()/activityVector.size()) + 1;
+                           ArrayList <JVector> expActivity = new ArrayList();
+                           for(var currActivity : activityVector){
+                               for(var Count = 0 ; Count < nRepeats ; Count++)
+                                        expActivity.add(currActivity);
+                           }
+                           jVectorSpace.fillSpace(xyVector, expActivity, status);
                        }
                        
                    }else

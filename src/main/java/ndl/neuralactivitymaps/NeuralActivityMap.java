@@ -640,30 +640,37 @@ public class NeuralActivityMap extends javax.swing.JFrame {
                        for(int nFrag = 2 ; nFrag < tFrag; nFrag++){
                             cmpts[nFrag - 2] = Double.valueOf(dataFrag[nFrag]);
                        }   
-                       activity = new JVector(cmpts);
+                       if (cmpts.length > 0 ){
+                            activity = new JVector(cmpts);
+                            activityVector.add(activity);
+                       }
                        
                        xyVector.add(xyCord);
-                       activityVector.add(activity);
+                       
                    }
                    double spaceRatio = xyVector.size()/activityVector.size();
                    if(this.isRepeatSpace() && spaceRatio != 1){
                        
                        
                        if(spaceRatio < 1){
-                           int nRepeats = (activityVector.size()/xyVector.size()) + 1;
+                           int nRepeats = (activityVector.size()/xyVector.size());
                            ArrayList <OrdXYData> expXYArray = new ArrayList();
                            for(var xyTmp : xyVector){
                                for(var Count = 0; Count < nRepeats ; Count++)
                                    expXYArray.add(xyTmp);
                            }
+                           for(int reminder = activityVector.size() % xyVector.size();reminder > 0 ; reminder--)
+                               expXYArray.add(xyVector.getLast());
                            jVectorSpace.fillSpace(expXYArray, activityVector, status);
                        }else{
-                           int nRepeats = (xyVector.size()/activityVector.size()) + 1;
+                           int nRepeats = (xyVector.size()/activityVector.size());
                            ArrayList <JVector> expActivity = new ArrayList();
                            for(var currActivity : activityVector){
                                for(var Count = 0 ; Count < nRepeats ; Count++)
                                         expActivity.add(currActivity);
                            }
+                           for(int reminder =  xyVector.size() % activityVector.size();reminder > 0 ; reminder--)
+                               expActivity.add(activityVector.getLast());
                            jVectorSpace.fillSpace(xyVector, expActivity, status);
                        }
                        

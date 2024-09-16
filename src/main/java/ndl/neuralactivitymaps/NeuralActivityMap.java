@@ -219,7 +219,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
 
         jFormattedTextFieldxRes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         jFormattedTextFieldxRes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jFormattedTextFieldxRes.setText("512");
+        jFormattedTextFieldxRes.setText("5120");
         jFormattedTextFieldxRes.setMinimumSize(new java.awt.Dimension(42, 22));
         jFormattedTextFieldxRes.setPreferredSize(new java.awt.Dimension(42, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -231,7 +231,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
 
         jFormattedTextFieldyRes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         jFormattedTextFieldyRes.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jFormattedTextFieldyRes.setText("512");
+        jFormattedTextFieldyRes.setText("5120");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 18;
@@ -304,6 +304,7 @@ public class NeuralActivityMap extends javax.swing.JFrame {
 
         jComboBoxFSeparator.setEditable(true);
         jComboBoxFSeparator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Space (\" \")", "Tab (\\t)", "Newline(\\n)", "Newline(\\r)", "Comma(\",\")", "Semicolon(\";\")", "Colon(\":\")", "Others(Overwrite this text)" }));
+        jComboBoxFSeparator.setSelectedIndex(4);
         jComboBoxFSeparator.setToolTipText("Choose the datasepartor string/char. \nIn case your separator is not listed choose other and overwrite it with your string/char. \nYou can represent standard escape sequence (that printf for eg) will understand to represent\nthe special charecter. ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
